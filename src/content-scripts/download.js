@@ -15,13 +15,20 @@ window.URL = window.URL || window.webkitURL;
   fetchIssuesList.then(issuesList => {
     console.log(issuesList);
     console.log('csv');
-    stringify(issuesList, { header: true, columns: { id: 'id', title: 'title', labels: 'labels' } }, (err, output) => {
-      if (err) {
-        // TODO: display error message
-        return;
-      }
+    stringify(issuesList, { 
+      header: true, columns: { 
+        id: 'id', 
+        title: 'title', 
+        description: 'description', 
+        author: 'author',
+        labels: 'labels' }
+      }, (err, output) => {
+        if (err) {
+          // TODO: display error message
+          return;
+        }
 
-      let objectURL = window.URL.createObjectURL(new Blob([output], { type: 'text/csv' }));
+      let objectURL = window.URL.createObjectURL(new Blob(["\ufeff",output], { type: 'text/csv' }));
 
       browser.runtime.sendMessage({
         type: 'download_gitlab_issues',

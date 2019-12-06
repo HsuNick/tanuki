@@ -3,10 +3,10 @@ import moment from 'moment';
 export default class GitlabIssue {
   constructor(data) {
     this.id = data.hasOwnProperty('id') ? GitlabIssue.getIdByIssuesUrl(data.id._text) : null;
-    this.link = data.hasOwnProperty('link') ? data.link._attributes._href : null;
+    this.link = data.hasOwnProperty('link') ? data.link._attributes.href : null;
     this.title = data.hasOwnProperty('title') ? data.title._text : null;
     this.updatedAt = data.hasOwnProperty('updated') ? moment(data.updated._text) : null;
-    this.author = data.hasOwnProperty('author') ? data.author : null;
+    this.author = data.hasOwnProperty('author') ? data.author.name._text : null;
     this.summary = data.hasOwnProperty('summary') ? data.summary._text : null;
     this.labels = data.hasOwnProperty('labels') ? GitlabIssue.transformLabels(data.labels) : null;
     this.description = data.hasOwnProperty('description') ? data.description._text : null;
@@ -17,6 +17,12 @@ export default class GitlabIssue {
     let regex = new RegExp('^(https?:\\/\\/)(((.[^./]+[.])[^./]+)+)(\\/)(([^./]+)(\\/))+(issues\\/)([0-9]+)');
     let result = regex.exec(url);
     return result[10];
+  }
+
+  static getIdByProject(url) {
+    let regex = new RegExp('^(https?:\\/\\/)(((.[^./]+[.])[^./]+)+)(\\/)(([^./]+)(\\/))+(issues\\/)([0-9]+)');
+    let result = regex.exec(url);
+    return result[7];
   }
 
   static transformLabels(labels) {
