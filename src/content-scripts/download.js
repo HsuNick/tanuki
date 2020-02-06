@@ -11,17 +11,27 @@ window.URL = window.URL || window.webkitURL;
   let element = detector.getRssFeedElement();
   let url = element.href;
   let rssFeed = new GitlabIssuesRssFeed();
-  let fetchIssuesList = rssFeed.setUrl(url).fetchIssuesList();
+  let fetchIssuesList = rssFeed.fetchIssuesList();
   fetchIssuesList.then(issuesList => {
     console.log(issuesList);
     console.log('csv');
     stringify(issuesList, { 
       header: true, columns: { 
-        id: 'id', 
-        title: 'title', 
-        description: 'description', 
+        link: 'link', 
+        iid: 'iid', 
+        state: 'state', 
+        title: 'title',
         author: 'author',
-        labels: 'labels' }
+        assignee: 'assignee',
+        labels: 'labels',
+        description: 'description',
+        created_at: 'created_at',
+        updatedAt: 'updatedAt',
+        due_date: 'due_date',
+        closed_at: 'closed_at',
+        milestone: 'milestone',
+        time_estimate: 'time_estimate',
+        time_spent: 'time_spent',}
       }, (err, output) => {
         if (err) {
           // TODO: display error message

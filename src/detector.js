@@ -31,7 +31,8 @@ export default class Detector {
 
   getRssFeedElement() {
     if (this.rssFeedElement === undefined || this.rssFeedElement == null) {
-      this.rssFeedElement = document.querySelector('div#content-body div.nav-controls.issues-nav-controls > a:first-child');
+      // this.rssFeedElement = document.querySelector('div#content-body div.nav-controls.issues-nav-controls > a:first-child');
+      this.rssFeedElement = document.querySelector('div#content-body div.nav-controls > a:first-child');
     }
 
     return this.rssFeedElement;

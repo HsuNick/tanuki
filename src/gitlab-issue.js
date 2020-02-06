@@ -2,15 +2,22 @@ import moment from 'moment';
 
 export default class GitlabIssue {
   constructor(data) {
-    this.id = data.hasOwnProperty('id') ? GitlabIssue.getIdByIssuesUrl(data.id._text) : null;
-    this.link = data.hasOwnProperty('link') ? data.link._attributes.href : null;
-    this.title = data.hasOwnProperty('title') ? data.title._text : null;
-    this.updatedAt = data.hasOwnProperty('updated') ? moment(data.updated._text) : null;
-    this.author = data.hasOwnProperty('author') ? data.author.name._text : null;
-    this.summary = data.hasOwnProperty('summary') ? data.summary._text : null;
-    this.labels = data.hasOwnProperty('labels') ? GitlabIssue.transformLabels(data.labels) : null;
-    this.description = data.hasOwnProperty('description') ? data.description._text : null;
+    this.link = data.hasOwnProperty('web_url') ? data.web_url : null;
+    this.id = data.hasOwnProperty('id') ? data.id : null;
+    this.iid = data.hasOwnProperty('id') ? data.iid : null;
+    this.state = data.hasOwnProperty('state') ? data.state : null;
+    this.title = data.hasOwnProperty('title') ? data.title : null;
+    this.author = data.hasOwnProperty('author') ? data.author.name : null;
     this.assignee = data.hasOwnProperty('assignee') ? GitlabIssue.transformAssignee(data.assignee) : null;
+    this.labels = data.hasOwnProperty('labels') ? GitlabIssue.transformLabels(data.labels) : null;
+    this.description = data.hasOwnProperty('description') ? data.description : null;
+    this.created_at = data.hasOwnProperty('created_at') ? GitlabIssue.transform_dateStyle(data.created_at) : null;
+    this.updatedAt = data.hasOwnProperty('updated_at') ? GitlabIssue.transform_dateStyle(data.updated_at) : null;
+    this.due_date = data.hasOwnProperty('due_date') ? GitlabIssue.transform_dateStyle(data.due_date) : null;
+    this.closed_at = data.hasOwnProperty('closed_at') ? GitlabIssue.transform_dateStyle(data.closed_at) : null;
+    this.milestone = data.hasOwnProperty('milestone') ? data.milestone : null;
+    this.time_estimate = data.hasOwnProperty('time_estimate') ? data.time_stats.human_time_estimate : null;
+    this.time_spent = data.hasOwnProperty('time_spent') ? data.time_stats.human_total_time_spent : null;
   }
 
   static getIdByIssuesUrl(url) {
@@ -19,26 +26,30 @@ export default class GitlabIssue {
     return result[10];
   }
 
-  static getIdByProject(url) {
-    let regex = new RegExp('^(https?:\\/\\/)(((.[^./]+[.])[^./]+)+)(\\/)(([^./]+)(\\/))+(issues\\/)([0-9]+)');
-    let result = regex.exec(url);
-    return result[7];
+  static transform_dateStyle(date) {
+    if ( date == '' || date == null || date == undefined) {
+      return null;
+    } else {
+      let newDate = date.split(/[T. ]/);
+      return newDate[0] + ' ' + newDate[1];
+    }
   }
 
   static transformLabels(labels) {
     if (labels in Array) {
-      return labels.label.map(label => {
-        return label._text;
+      return labels.map(label => {
+        return label;
       });
     } else {
-      return [labels.label._text];
+      return labels;
     }
   }
 
   static transformAssignee(assignee) {
-    return {
-      email: assignee.email._text,
-      name: assignee.name._text,
-    };
+    if ( assignee == '' || assignee == null || assignee == undefined) {
+      return null;
+    } else {
+      return assignee.name;
+    }
   }
 }
