@@ -26,7 +26,7 @@ window.URL = window.URL || window.webkitURL;
         labels: 'labels',
         description: 'description',
         created_at: 'created_at',
-        updatedAt: 'updatedAt',
+        updated_at: 'updated_at',
         due_date: 'due_date',
         closed_at: 'closed_at',
         milestone: 'milestone',
