@@ -60,7 +60,7 @@ export default class GitlabIssuesRssFeed {
         // });
 
         issuesList = issuesList.concat(filtered);
-        console.log(issuesList.concat(filtered));
+        // console.log(issuesList.concat(filtered));
         if (filtered.length !== 0) {
           return resolve(self.fetchIssueList(issuesList, page));
         }

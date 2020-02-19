@@ -13,11 +13,11 @@ export default class GitlabIssue {
     this.description = data.hasOwnProperty('description') ? data.description : null;
     this.created_at = data.hasOwnProperty('created_at') ? GitlabIssue.transform_dateStyle(data.created_at) : null;
     this.updatedAt = data.hasOwnProperty('updated_at') ? GitlabIssue.transform_dateStyle(data.updated_at) : null;
-    this.due_date = data.hasOwnProperty('due_date') ? GitlabIssue.transform_dateStyle(data.due_date) : null;
+    this.due_date = data.hasOwnProperty('due_date') ? data.due_date : null;
     this.closed_at = data.hasOwnProperty('closed_at') ? GitlabIssue.transform_dateStyle(data.closed_at) : null;
     this.milestone = data.hasOwnProperty('milestone') ? data.milestone : null;
-    this.time_estimate = data.hasOwnProperty('time_estimate') ? data.time_stats.human_time_estimate : null;
-    this.time_spent = data.hasOwnProperty('time_spent') ? data.time_stats.human_total_time_spent : null;
+    this.time_estimate = data.hasOwnProperty('time_stats') ? data.time_stats.human_time_estimate : null;
+    this.time_spent = data.hasOwnProperty('time_stats') ? data.time_stats.human_total_time_spent : null;
   }
 
   static getIdByIssuesUrl(url) {
