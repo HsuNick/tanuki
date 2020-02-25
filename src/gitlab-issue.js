@@ -11,10 +11,10 @@ export default class GitlabIssue {
     this.assignee = data.hasOwnProperty('assignee') ? GitlabIssue.transformAssignee(data.assignee) : null;
     this.labels = data.hasOwnProperty('labels') ? GitlabIssue.transformLabels(data.labels) : null;
     this.description = data.hasOwnProperty('description') ? data.description : null;
-    this.created_at = data.hasOwnProperty('created_at') ? GitlabIssue.transform_dateStyle(data.created_at) : null;
-    this.updated_at = data.hasOwnProperty('updated_at') ? GitlabIssue.transform_dateStyle(data.updated_at) : null;
+    this.created_at = data.hasOwnProperty('created_at') ? GitlabIssue.transformDateStyle(data.created_at) : null;
+    this.updated_at = data.hasOwnProperty('updated_at') ? GitlabIssue.transformDateStyle(data.updated_at) : null;
     this.due_date = data.hasOwnProperty('due_date') ? data.due_date : null;
-    this.closed_at = data.hasOwnProperty('closed_at') ? GitlabIssue.transform_dateStyle(data.closed_at) : null;
+    this.closed_at = data.hasOwnProperty('closed_at') ? GitlabIssue.transformDateStyle(data.closed_at) : null;
     this.milestone = data.hasOwnProperty('milestone') ? data.milestone : null;
     this.time_estimate = data.hasOwnProperty('time_stats') ? data.time_stats.human_time_estimate : null;
     this.time_spent = data.hasOwnProperty('time_stats') ? data.time_stats.human_total_time_spent : null;
@@ -26,7 +26,7 @@ export default class GitlabIssue {
     return result[10];
   }
 
-  static transform_dateStyle(date) {
+  static transformDateStyle(date) {
     if ( date == '' || date == null || date == undefined) {
       return null;
     } else {
