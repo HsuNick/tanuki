@@ -36,13 +36,7 @@ export default class GitlabIssue {
   }
 
   static transformLabels(labels) {
-    if (labels in Array) {
-      return labels.map(label => {
-        return label;
-      });
-    } else {
-      return labels;
-    }
+    return labels.join();
   }
 
   static transformAssignee(assignee) {
